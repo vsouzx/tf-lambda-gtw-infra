@@ -56,7 +56,7 @@ def criar_avaliacao(event):
 def atualizar_avaliacao(event):
     body = json.loads(event['body'])
 
-    response = atualizar_avaliacao(body)
+    response = update_avaliacao(body)
 
     item = response['Attributes']
 
@@ -123,7 +123,7 @@ def find_all():
 def inserir_avaliacao(item):
     table.put_item(Item=item)
 
-def atualizar_avaliacao(body):
+def update_avaliacao(body):
     print("body atualizar")
     print(body)
     return table.update_item(
