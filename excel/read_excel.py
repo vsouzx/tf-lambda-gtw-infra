@@ -10,10 +10,10 @@ def enviar_dados_excel(file_path):
 
     try:
         # Tentar obter o valor da variável de ambiente
-        url = os.environ['api_gateway_url']
+        url = os.environ['API_GATEWAY_URL']
     except KeyError:
     # Lançar uma exceção personalizada se a variável não estiver configurada
-        raise EnvironmentError("A variável de ambiente 'api_gateway_url' não está configurada.")
+        raise EnvironmentError("A variável de ambiente 'API_GATEWAY_URL' não está configurada.")
 
     try:
         df = pd.read_excel(file_path)
