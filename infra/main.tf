@@ -190,8 +190,6 @@ resource "aws_api_gateway_stage" "api_stage" {
 resource "aws_dynamodb_table" "basic-dynamodb-table" {
   name           = var.dynamo_table
   billing_mode   = "PAY_PER_REQUEST"
-  read_capacity  = 20
-  write_capacity = 20
   hash_key       = "funcional"
   range_key      = "cod_ciclo"
 
