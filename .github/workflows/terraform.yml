@@ -28,7 +28,7 @@ jobs:
           terraform_version: 1.8.3
 
       - name: teste
-        run: echo ${{ secrets.AWS_ASSUME_ROLE_ARN }}
+        run: echo ${{ vars.AWS_ASSUME_ROLE_ARN }}
       
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -40,10 +40,10 @@ jobs:
       - name: Terraform init
         run: |
           cd infra && terraform init \
-          -backend-config="bucket=${{ env.STATEFILE_BUCKET }}" \
+          -backend-config="bucket=${{ vars.STATEFILE_BUCKET }}" \
           -backend-config="key=${{ github.event.repository.name }}" \
           -backend-config="region=${{ inputs.aws-region }}" \
-          -backend-config="dynamodb_table=${{ env.DYNAMO_DB_TERRAFORM_LOCK }}"
+          -backend-config="dynamodb_table=${{ vars.DYNAMO_DB_TERRAFORM_LOCK }}"
 
       - name: Terraform validate
         run: terraform validate
