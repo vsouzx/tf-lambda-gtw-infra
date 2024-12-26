@@ -26,6 +26,9 @@ jobs:
         uses: hashicorp/setup-terraform@v3
         with: 
           terraform_version: 1.8.3
+
+      - name: teste
+        run: echo ${{ secrets.AWS_ASSUME_ROLE_ARN }}
       
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
