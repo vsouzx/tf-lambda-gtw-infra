@@ -124,6 +124,8 @@ def inserir_avaliacao(item):
     table.put_item(Item=item)
 
 def atualizar_avaliacao(body):
+    print("body atualizar")
+    print(body)
     return table.update_item(
         Key={
             'funcional': body['funcional'],
