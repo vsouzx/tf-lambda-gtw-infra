@@ -13,3 +13,7 @@ variable "aws_region" {
 variable "stage_name" {
     type = string
 }
+
+variable "log_retention_days" {
+    type = number
+}

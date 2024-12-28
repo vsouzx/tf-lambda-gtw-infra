@@ -32,6 +32,11 @@ resource "aws_iam_policy" "lambda_logging" {
     EOF
 }
 
+resource "aws_iam_role_policy_attachment" "lambda_logs" {
+    role = aws_iam_role.iam_for_lambda.name
+    policy_arn = aws_iam_policy.lambda_logging.arn
+}
+
 resource "aws_lambda_function" "lambda" {
     filename           = "lambda.zip"
     function_name      = "avaliacoes_lambda"
@@ -52,12 +57,7 @@ resource "aws_lambda_function" "lambda" {
 
 resource "aws_cloudwatch_log_group" "example"{
     name = "/aws/lambda/${aws_lambda_function.lambda.function_name}"
-    retention_in_days = 7
-}
-
-resource "aws_iam_role_policy_attachment" "lambda_logs" {
-    role = aws_iam_role.iam_for_lambda.name
-    policy_arn = aws_iam_policy.lambda_logging.arn
+    retention_in_days = var.log_retention_days
 }
 
 resource "aws_api_gateway_rest_api" "avaliacoes_gw_api"{
