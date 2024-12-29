@@ -37,16 +37,16 @@ jobs:
           role-session-name: GitHub_to_AWS_via_FederatedOIDC
           aws-region: ${{ inputs.aws-region }}
 
-      - name: Terraform destroy
-        run: cd infra && terraform destroy
-      # - name: Terraform init
-      #   run: |
-      #     cd infra && terraform init \
-      #     -backend-config="bucket=${{ vars.STATEFILE_BUCKET }}" \
-      #     -backend-config="key=${{ github.event.repository.name }}" \
-      #     -backend-config="region=${{ inputs.aws-region }}" \
-      #     -backend-config="dynamodb_table=${{ vars.DYNAMO_DB_TERRAFORM_LOCK }}"
+      - name: Terraform init
+        run: |
+          cd infra && terraform init \
+          -backend-config="bucket=${{ vars.STATEFILE_BUCKET }}" \
+          -backend-config="key=${{ github.event.repository.name }}" \
+          -backend-config="region=${{ inputs.aws-region }}" \
+          -backend-config="dynamodb_table=${{ vars.DYNAMO_DB_TERRAFORM_LOCK }}"
 
+        - name: Terraform destroy
+        run: cd infra && terraform destroy
       # - name: Terraform validate
       #   run: terraform validate
       
