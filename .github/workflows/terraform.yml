@@ -30,9 +30,6 @@ jobs:
         with: 
           terraform_version: 1.8.3
 
-      - name: teste
-        run: echo ${{ vars.AWS_ASSUME_ROLE_ARN }}
-      
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with: 
