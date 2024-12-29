@@ -45,17 +45,10 @@ jobs:
           -backend-config="region=${{ inputs.aws-region }}" \
           -backend-config="dynamodb_table=${{ vars.DYNAMO_DB_TERRAFORM_LOCK }}"
 
-      - name: Terraform validate
-        run: terraform validate
-      
-      - name: Terraform plan
-        id: terraform-plan
-        run: cd infra &&
-          terraform workspace select ${{ inputs.environment }} || terraform workspace new ${{ inputs.environment }} && 
-          terraform plan -var-file="./envs/${{ inputs.environment }}/terraform.tfvars" -out="${{ inputs.environment }}.plan"
+      - name: Terraform workspace
+        run: |
+          cd infra && terraform workspace select ${{ inputs.environment }} || terraform workspace new ${{ inputs.environment }}
 
-      - name: Terraform Apply
-        id: terraform-apply
-        run: cd infra &&
-          terraform workspace select ${{ inputs.environment }} || terraform workspace new ${{ inputs.environment }} && 
-          terraform apply "${{ inputs.environment }}.plan" 
+      - name: Terraform Destroy
+        run: |
+          cd infra && terraform destroy -var-file="./envs/${{ inputs.environment }}/terraform.tfvars" -auto-approve
