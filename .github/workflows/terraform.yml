@@ -45,7 +45,7 @@ jobs:
           -backend-config="region=${{ inputs.aws-region }}" \
           -backend-config="dynamodb_table=${{ vars.DYNAMO_DB_TERRAFORM_LOCK }}"
 
-        - name: Terraform destroy
+      - name: Terraform destroy
         run: cd infra && terraform destroy
       # - name: Terraform validate
       #   run: terraform validate
