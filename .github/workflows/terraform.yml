@@ -9,6 +9,9 @@ on:
       aws-region:
         type: string
         required: true
+      destroy:
+        type: boolean
+        required: true
       
 jobs:
   terraform:
@@ -49,6 +52,13 @@ jobs:
         run: |
           cd infra && terraform workspace select ${{ inputs.environment }} || terraform workspace new ${{ inputs.environment }}
 
-      - name: Terraform Destroy
+      - name: Terraform Plan or Destroy
         run: |
-          cd infra && terraform destroy -var-file="./envs/${{ inputs.environment }}/terraform.tfvars" -auto-approve
+          if [ "${{ inputs.destroy }}" = "true" ]; then
+            echo "Destroying resources..."
+            cd infra && terraform destroy -var-file="./envs/${{ inputs.environment }}/terraform.tfvars" -auto-approve
+          else
+            echo "Planning and applying resources..."
+            cd infra && terraform plan -var-file="./envs/${{ inputs.environment }}/terraform.tfvars" -out="${{ inputs.environment }}.plan"
+            terraform apply "${{ inputs.environment }}.plan"
+          fi

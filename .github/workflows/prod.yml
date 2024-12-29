@@ -15,5 +15,5 @@ jobs:
     with:
       environment: prod
       aws-region: "us-east-1"
-    
+      destroy: false
 
