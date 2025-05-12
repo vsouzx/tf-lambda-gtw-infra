@@ -143,9 +143,7 @@ def findAll():
     return table.scan()
 
 def find_by_filter_expression(filter_expression):
-    return table.scan(
-        FilterExpression=filter_expression,
-    )
+    return table.scan(FilterExpression=filter_expression)
     
 #decimal utils
 def decimal_default(obj):
